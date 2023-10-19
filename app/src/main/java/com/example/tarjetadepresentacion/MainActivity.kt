@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -49,10 +50,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
 fun Perfil() {
-    var mostrarDatos by remember { mutableStateOf(false) }/*Se pone false para que NO se pulse por defecto*/
+    var mostrarDatos by remember { mutableStateOf(false) }/*Se pone false para que se pulse por defecto*/
 
     Column(
         modifier = Modifier
@@ -88,6 +88,7 @@ fun Perfil() {
             textAlign = TextAlign.Center
         )
         Button(onClick = { mostrarDatos = !mostrarDatos }) {
+
             Text(
                 if (mostrarDatos)
                     "Ocultar datos del perfil"
@@ -96,24 +97,24 @@ fun Perfil() {
             )
         }
 
+
         if (mostrarDatos) {
-            Spacer(modifier = Modifier.padding(20.dp))/*Para que haya espacio entre los datos y el boton*/
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("📞 Teléfono:")
-                Text("+34 620 55 97 20")
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("✉️ Correo:")
-                Text("danielrueda3012@gmail.com")
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("🌐 Red Social:")
-                Text("@ruedinha30_")
-            }
+            Spacer(modifier = Modifier.height(20.dp))
+
+            DatosPersonales("📞 Teléfono:", "+34 620 55 97 20")
+            DatosPersonales("✉️ Correo:", "danielrueda3012@gmail.com")
+            DatosPersonales("🌐 Red Social:", "@ruedinha30_")
         }
     }
 }
 
+@Composable
+fun DatosPersonales(etiqueta: String, valor: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(etiqueta)
+        Text(valor)
+    }
+}
 @Composable
 fun ConBotonPulsado() {
     var mostrarDatos by remember { mutableStateOf(true) }/*Se pone true para que se pulse por defecto*/
@@ -162,19 +163,11 @@ fun ConBotonPulsado() {
         }
 
         if (mostrarDatos) {
-            Spacer(modifier = Modifier.padding(20.dp))/*Para que haya espacio entre los datos y el boton*/
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("📞 Teléfono:")
-                Text("+34 620 55 97 20")
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("✉️ Correo:")
-                Text("danielrueda3012@gmail.com")
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("🌐 Red Social:")
-                Text("@ruedinha30_")
-            }
+            Spacer(modifier = Modifier.height(20.dp))
+
+            DatosPersonales("📞 Teléfono:", "+34 620 55 97 20")
+            DatosPersonales("✉️ Correo:", "danielrueda3012@gmail.com")
+            DatosPersonales("🌐 Red Social:", "@ruedinha30_")
         }
     }
 }
