@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,9 +51,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun Perfil() {
-    var mostrarDatos by remember { mutableStateOf(false) }/*Se pone false para que se pulse por defecto*/
+    var mostrarDatos by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -60,7 +62,7 @@ fun Perfil() {
             .fillMaxHeight()
             .background(color = Color(109, 172, 179))
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top, // Cambiado a Alignment.Top
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val image = painterResource(R.drawable.fotoperfil)
@@ -84,26 +86,32 @@ fun Perfil() {
         Text(
             text = "Desarrollo de aplicaciones multiplataforma",
             fontSize = 18.sp,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusable(),
             textAlign = TextAlign.Center
         )
-        Button(onClick = { mostrarDatos = !mostrarDatos }) {
+        Spacer(modifier = Modifier.height(20.dp)) // Espacio constante
 
+        Button(onClick = { mostrarDatos = !mostrarDatos }) {
             Text(
                 if (mostrarDatos)
-                    "Ocultar datos del perfil"
-                else
                     "Mostrar datos del perfil"
+                else
+                    "Mostrar Nacionalidad"
             )
         }
 
+        Spacer(modifier = Modifier.height(20.dp)) // Espacio constante
 
+        if (!mostrarDatos) {
+            DatosPersonales("📞 Teléfono--->", "+34 620 55 97 20")
+            DatosPersonales("✉️ Correo--->", "danielrueda3012@gmail.com")
+            DatosPersonales("🌐 Red Social--->", "@ruedinha30_")
+        }
         if (mostrarDatos) {
-            Spacer(modifier = Modifier.height(20.dp))
-
-            DatosPersonales("📞 Teléfono:", "+34 620 55 97 20")
-            DatosPersonales("✉️ Correo:", "danielrueda3012@gmail.com")
-            DatosPersonales("🌐 Red Social:", "@ruedinha30_")
+            DatosPersonales("🇪🇸 Nacionalidad--->", "Española")
+            DatosPersonales("🌆 Ciudad--->", "Madrid")
         }
     }
 }
@@ -115,9 +123,10 @@ fun DatosPersonales(etiqueta: String, valor: String) {
         Text(valor)
     }
 }
+
 @Composable
 fun ConBotonPulsado() {
-    var mostrarDatos by remember { mutableStateOf(true) }/*Se pone true para que se pulse por defecto*/
+    var mostrarDatos by remember { mutableStateOf(false) }  /*Se pone false para que se pulse por defecto*/
 
     Column(
         modifier = Modifier
@@ -152,22 +161,30 @@ fun ConBotonPulsado() {
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
-        Button(onClick = { mostrarDatos = !mostrarDatos }) {
+        Spacer(modifier = Modifier.height(20.dp)) // Espacio constante
 
+        Button(onClick = { mostrarDatos = !mostrarDatos }) {
             Text(
                 if (mostrarDatos)
-                    "Ocultar datos del perfil"
+                    "Mostrar Nacionalidad"
                 else
-                    "Mostrar datos del perfil"
+                    "Mostrar datos del perfi"
             )
         }
+        Spacer(modifier = Modifier.height(20.dp)) // Espacio constante
 
         if (mostrarDatos) {
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))/*Espacio entre el boton y los datos*/
 
-            DatosPersonales("📞 Teléfono:", "+34 620 55 97 20")
-            DatosPersonales("✉️ Correo:", "danielrueda3012@gmail.com")
-            DatosPersonales("🌐 Red Social:", "@ruedinha30_")
+            DatosPersonales("📞 Teléfono--->", "+34 620 55 97 20")
+            DatosPersonales("✉️ Correo--->", "danielrueda3012@gmail.com")
+            DatosPersonales("🌐 Red Social--->", "@ruedinha30_")
+        }
+        if (!mostrarDatos) {
+            Spacer(modifier = Modifier.height(20.dp))/*Espacio entre el boton y los datos*/
+
+            DatosPersonales("🇪🇸 Nacionalidad--->", "Española")
+            DatosPersonales("🌆 Ciudad--->", "Madrid")
         }
     }
 }
