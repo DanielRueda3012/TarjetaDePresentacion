@@ -55,6 +55,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Perfil() {
     var mostrarDatos by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
