@@ -3,6 +3,8 @@ package com.example.tarjetadepresentacion
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
@@ -27,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,13 +43,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             TarjetaDePresentacionTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     Perfil()
                 }
+
             }
         }
     }
@@ -55,6 +61,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Perfil() {
     var mostrarDatos by remember { mutableStateOf(false) }
+    var rotationAngle by remember { mutableStateOf(0f) }
+
+    val rotationState by animateFloatAsState(
+        targetValue = if (mostrarDatos) 360f else 0f,
+        animationSpec = tween(durationMillis = 1000), label = ""
+    )
 
     Column(
         modifier = Modifier
@@ -62,11 +74,18 @@ fun Perfil() {
             .fillMaxHeight()
             .background(color = Color(109, 172, 179))
             .padding(16.dp),
-        verticalArrangement = Arrangement.Top, // Cambiado a Alignment.Top
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val image = painterResource(R.drawable.fotoperfil)
-        Image(painter = image, contentDescription = null, modifier = Modifier.size(250.dp))
+
+        Image(
+            painter = image,
+            contentDescription = null,
+            modifier = Modifier
+                .size(250.dp)
+                .rotate(rotationState)
+        )
         Text(
             text = "Daniel",
             modifier = Modifier
@@ -93,7 +112,10 @@ fun Perfil() {
         )
         Spacer(modifier = Modifier.height(20.dp)) // Espacio constante
 
-        Button(onClick = { mostrarDatos = !mostrarDatos }) {
+        Button(onClick = {
+            mostrarDatos = !mostrarDatos
+            rotationAngle += 360f // Incrementa el ángulo en 360 grados al hacer clic
+        }) {
             Text(
                 if (mostrarDatos)
                     "Mostrar datos del perfil"
@@ -134,7 +156,7 @@ fun ConBotonPulsado() {
             .fillMaxHeight()
             .background(color = Color(109, 172, 179))
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val image = painterResource(R.drawable.fotoperfil)
